@@ -21,7 +21,7 @@
     "face-api.js": "^0.22.2",
     "framer-motion": "^12.23.12",
     "leaflet": "^1.9.4",
-    "lucide-react": "^0.344.0",
+    "lucide-react": "^0.542.0",
     "react": "^19.1.1",
     "react-camera-pro": "^1.4.0",
     "react-dom": "^19.1.1",
