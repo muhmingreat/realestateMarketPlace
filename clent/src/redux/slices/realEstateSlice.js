@@ -4,80 +4,96 @@ const initialState = {
   properties: [],
   myProperties: [],
   highestRated: null,
-  reviews: {},
+  reviews: {}, 
   userReviews: [],
   loading: false,
   error: null,
-   searchQuery: ""
+  searchQuery: "",
+  chartData: [], 
 };
 
 const realEstateSlice = createSlice({
   name: "realEstate",
   initialState,
   reducers: {
-    // Property related
+    // ----------------------------
+    // Property related reducers
+    // ----------------------------
     setProperties: (state, action) => {
-      state.properties = action.payload;
+      state.properties = action.payload || [];
     },
     setMyProperties: (state, action) => {
-      state.myProperties = action.payload;
+      state.myProperties = action.payload || [];
     },
     setSearchQuery: (state, action) => {
-      state.searchQuery = action.payload;
+      state.searchQuery = action.payload || "";
     },
     addProperty: (state, action) => {
-      state.properties.push(action.payload);
+      if (action.payload) state.properties.push(action.payload);
     },
     updateProperty: (state, action) => {
+      const updatedProperty = action.payload;
+      if (!updatedProperty?.productID) return;
+
       const index = state.properties.findIndex(
-        (p) => p.productID === action.payload.productID
+        (p) => p.productID === updatedProperty.productID
       );
-      if (index !== -1) {
-        state.properties[index] = {
-          ...state.properties[index],
-          ...action.payload,
-        };
-      }
+      if (index !== -1) state.properties[index] = { ...state.properties[index], ...updatedProperty };
     },
     updatePrice: (state, action) => {
-      const { productID, price } = action.payload;
+      const { productID, price } = action.payload || {};
       const index = state.properties.findIndex((p) => p.productID === productID);
-      if (index !== -1) {
-        state.properties[index].price = price;
-      }
+      if (index !== -1) state.properties[index].price = price;
     },
     setHighestRated: (state, action) => {
-      state.highestRated = action.payload;
+      state.highestRated = action.payload || null;
     },
 
-    // Reviews
+    // ----------------------------
+    // Review related reducers
+    // ----------------------------
     setReviews: (state, action) => {
-      const { productID, reviews } = action.payload;
-      state.reviews[productID] = reviews;
+      const { productID, reviews } = action.payload || {};
+      if (productID) state.reviews[productID] = reviews || [];
     },
     addReview: (state, action) => {
-      const { productID, review } = action.payload;
-      if (!state.reviews[productID]) {
-        state.reviews[productID] = [];
-      }
+      const { productID, review } = action.payload || {};
+      if (!productID || !review) return;
+      if (!state.reviews[productID]) state.reviews[productID] = [];
       state.reviews[productID].push(review);
     },
     likeReview: (state, action) => {
-      const { productID, reviewIndex } = action.payload;
-      if (state.reviews[productID] && state.reviews[productID][reviewIndex]) {
-        state.reviews[productID][reviewIndex].likes += 1;
+      const { productID, reviewIndex } = action.payload || {};
+      const reviews = state.reviews[productID];
+      if (reviews && reviews[reviewIndex]) {
+        reviews[reviewIndex].likes = (reviews[reviewIndex].likes || 0) + 1;
       }
     },
     setUserReviews: (state, action) => {
-      state.userReviews = action.payload;
+      state.userReviews = action.payload || [];
     },
 
-    // Loading & Error
+    // ----------------------------
+    // Chart related reducers
+    // ----------------------------
+    setChartData: (state, action) => {
+      state.chartData = action.payload || [];
+    },
+    addChartPoint: (state, action) => {
+      if (action.payload) state.chartData.push(action.payload);
+    },
+    clearChartData: (state) => {
+      state.chartData = [];
+    },
+
+    // ----------------------------
+    // Loading & Error reducers
+    // ----------------------------
     setLoading: (state, action) => {
-      state.loading = action.payload;
+      state.loading = !!action.payload;
     },
     setError: (state, action) => {
-      state.error = action.payload;
+      state.error = action.payload || null;
     },
   },
 });
@@ -93,6 +109,9 @@ export const {
   addReview,
   likeReview,
   setUserReviews,
+  setChartData,
+  addChartPoint,
+  clearChartData,
   setLoading,
   setError,
   setSearchQuery,

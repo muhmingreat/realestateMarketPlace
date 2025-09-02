@@ -1,14 +1,15 @@
 import LivenessCheck from './LivenessCheck'
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { Camera } from "react-camera-pro";
 import { useAppKitAccount } from "@reown/appkit/react";
 import useKYC from "../hooks/useKycVerifier";
+import { useNavigate } from 'react-router-dom';
 
 export default function KYCForm() {
   const cameraRef = useRef(null);
   const { address } = useAppKitAccount();
   const { uploadKYC, loading, error, status } = useKYC();
-
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [documentType, setDocumentType] = useState("passport");
@@ -20,6 +21,12 @@ export default function KYCForm() {
 
   const [livenessPassed, setLivenessPassed] = useState(false);
 
+    useEffect(() => {
+    const agreed = localStorage.getItem("termsAgreed");
+    if (agreed !== "true") {
+      navigate("/terms"); 
+    }
+  }, [navigate]);
 
   const resizeBase64Image = (base64Str, maxWidth = 300, maxHeight = 300) => {
     return new Promise((resolve) => {

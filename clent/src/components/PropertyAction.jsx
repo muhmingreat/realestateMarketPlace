@@ -22,7 +22,7 @@ export default function PropertyActions({ property, adminAddress }) {
   // fallback escrow object
   const escrow = property.escrow || {
     buyer: ethers.ZeroAddress,
-    amount: 0n,
+    amount: Number(0),
     confirmed: false,
     refunded: false,
   };

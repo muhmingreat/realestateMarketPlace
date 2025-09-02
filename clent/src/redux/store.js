@@ -2,15 +2,38 @@ import { configureStore } from "@reduxjs/toolkit";
 import realEstateReducer from "./slices/realEstateSlice";
 import userReducer from "./slices/userSlice";
 import escrowReducer from './slices/escrowSlice';
-import web3authReducer from './slices/web3authSlice';
+
 
 export const store = configureStore({
   reducer: {
     realEstate: realEstateReducer,
     escrow: escrowReducer,
-    web3auth: web3authReducer,
     user: userReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore paths that may contain BigInt
+        ignoredPaths: ["realEstate.properties"],
+      },
+    }),
 });
 
 export default store;
+
+// import { configureStore } from "@reduxjs/toolkit";
+// import realEstateReducer from "./slices/realEstateSlice";
+// import userReducer from "./slices/userSlice";
+// import escrowReducer from './slices/escrowSlice';
+
+
+// export const store = configureStore({
+//   reducer: {
+//     realEstate: realEstateReducer,
+//     escrow: escrowReducer,
+  
+//     user: userReducer,
+//   },
+// });
+
+// export default store;

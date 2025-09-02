@@ -77,7 +77,7 @@ const PropertyDetails = () => {
   if (!property) return <p className="text-center mt-4">Loading property...</p>;
 
   return (
-    <div className="p-6 max-w mx-auto bg-gradient-to-br from-blue-950 via-blue-100 to-blue-200 to-white/60">
+    <div className="p-6 max-w mx-auto bg-gradient-to-br from-blue-950 via-blue-100 to-white/60">
       <h2 className="text-3xl font-bold text-center mb-6">{property.title}</h2>
 
       <div className="flex flex-col md:flex-row md:gap-8">
@@ -136,7 +136,7 @@ const PropertyDetails = () => {
           />
         </div>
 
-        <div className="w-full max-w-3xl rounded-xl shadow-md bg-white/60 p-4">
+        <div className="w-full max-w-3xl rounded-xl shadow-md bg-black text-white p-4">
           <AddReviewForm productId={id} user={address} />
           <div className="mt-4">
             <ReviewList productId={id} reviews={reviews} user={address} />

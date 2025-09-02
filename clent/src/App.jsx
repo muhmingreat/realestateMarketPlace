@@ -1,8 +1,3 @@
-
-
-
-
-
 import React from 'react'
 import Header from './components/Header'
 import "./config/connection"
@@ -19,6 +14,11 @@ import UpdateProperty from './components/UpdateProperty';
 import MyProperties from './pages/MyProperties'
 import ThunderSuccess from './components/ThunderSuccess';
 import About from './components/About';
+import TermsAndConditions from './pages/TermsAndConditions';
+import ProtectedKYC from './components/ProtectedKYC';
+import FAQ from './pages/FAQ';
+import PrivacyPolicy from './pages/PolicyAndPrivacy';
+import ContactAdmin from './pages/ContactAdmin';
 
 const App = () => {
   return (
@@ -28,14 +28,21 @@ const App = () => {
       <Routes>
          <Route path="/" element={<Home />} />
         <Route path="/form" element={<PropertyForm />} />
-        <Route path="/kyc" element={<KYCForm />} />
+        {/* <Route path="/kyc" element={<KYCForm />} /> */}
+        <Route path="/kyc" element={<ProtectedKYC><KYCForm /></ProtectedKYC>} />
+
         <Route path="/properties" element={<AllProperties  />} />
         <Route path="/me" element={<MyProperties  />} />
         <Route path="/success" element={<ThunderSuccess />} />
-
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactAdmin />} />
         <Route path="/properties/:id/update" element={<UpdateProperty />} />
+
         <Route path="/properties/:id" element={<PropertyDetails />} />
-        <Route path="/dashboard" element={<KycAdminPanel />} /> 
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/dashboard" element={<KycAdminPanel />} />
 
 
       </Routes>

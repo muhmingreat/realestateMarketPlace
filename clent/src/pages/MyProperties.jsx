@@ -38,12 +38,13 @@ const MyProperties = () => {
   }
 
   return (
-    <div className="p-6">
+    // <div className="p-6">
+ <div className="min-h-screen p-6 bg-[radial-gradient(circle,rgba(0,0,0,0.1)_1px,transparent_2000px)] bg-[length:2000px_2000px]">
       <h2 className="text-2xl font-bold mb-4 text-center">My Properties</h2>
       {properties.length === 0 ? (
         <p className="text-center text-gray-500">No properties found.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6">
           {properties.map((property) => (
             <div
               key={property.id}
